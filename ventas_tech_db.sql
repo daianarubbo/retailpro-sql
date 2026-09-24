@@ -1,13 +1,21 @@
+-- Motor utilizado: PostgreSQL 18
+
+-- ============================================
+-- SECCIÓN 1: DROP TABLES
+-- ============================================
 DROP TABLE IF EXISTS ventas;
 DROP TABLE IF EXISTS productos;
 DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS categorias;
+
+-- ============================================
+-- SECCIÓN 2: CREATE TABLES
+-- ============================================
 CREATE TABLE categorias (
     id_categoria INT PRIMARY KEY,
     nombre_categoria VARCHAR(50) NOT NULL,
     descripcion VARCHAR(200)
 );
-
 
 CREATE TABLE clientes (
     id_cliente INT PRIMARY KEY,
@@ -17,7 +25,6 @@ CREATE TABLE clientes (
     fecha_registro DATE NOT NULL
 );
 
-
 CREATE TABLE productos (
     id_producto INT PRIMARY KEY,
     nombre_producto VARCHAR(100) NOT NULL,
@@ -26,6 +33,7 @@ CREATE TABLE productos (
     stock INT DEFAULT 0,
     activo BOOLEAN DEFAULT TRUE
 );
+
 CREATE TABLE ventas (
     id_venta INT PRIMARY KEY,
     id_cliente INT REFERENCES clientes(id_cliente),
@@ -35,12 +43,16 @@ CREATE TABLE ventas (
     fecha_venta DATE NOT NULL
 );
 
+-- ============================================
+-- SECCIÓN 3: INSERT DATA
+-- ============================================
 INSERT INTO categorias (id_categoria, nombre_categoria, descripcion) VALUES
   (1, 'Computación',    'Laptops, PCs y monitores'),
   (2, 'Accesorios',     'Periféricos y complementos'),
   (3, 'Audio',          'Auriculares y parlantes'),
   (4, 'Almacenamiento', 'Discos y memorias');
-  INSERT INTO clientes (id_cliente, nombre, email, ciudad, fecha_registro) VALUES
+
+INSERT INTO clientes (id_cliente, nombre, email, ciudad, fecha_registro) VALUES
   (1, 'María López',  'maria@mail.com',  'Buenos Aires', '2024-01-05'),
   (2, 'Carlos Ruiz',  'carlos@mail.com', 'Córdoba',      '2024-01-10'),
   (3, 'Ana Gómez',    'ana@mail.com',    'Rosario',      '2024-02-01'),
@@ -66,8 +78,11 @@ INSERT INTO ventas (id_venta, id_cliente, id_producto, cantidad, precio_unitario
   ( 8, 3, 2, 8,   28.00, '2024-03-13'),
   ( 9, 4, 4, 1,  120.00, '2024-03-14'),
   (10, 5, 3, 2,  450.00, '2024-03-15');
-  SELECT * FROM categorias;   -- esperado: 4 filas
+
+-- ============================================
+-- SECCIÓN 4: VALIDACIÓN
+-- ============================================
+SELECT * FROM categorias;   -- esperado: 4 filas
 SELECT * FROM clientes;     -- esperado: 5 filas
 SELECT * FROM productos;    -- esperado: 6 filas
 SELECT * FROM ventas;       -- esperado: 10 filas
-
